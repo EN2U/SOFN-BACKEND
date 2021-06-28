@@ -4,7 +4,8 @@
   "description": "Api",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "newman run ./postman/tfg.postman_collection.json  -r htmlextra --reporter-htmlextra-export ./postman/report.html",
+    "dev": "nodemon backend/server.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,12 @@
   },
   "homepage": "https://github.com/ULL-ESIT-INF-TFG-2021/TFG-2021-Eduardo-Nuez-back#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
     "newman": "^5.2.4",
-    "newman-reporter-htmlextra": "^1.21.0"
+    "newman-reporter-htmlextra": "^1.21.0",
+    "nodemon": "^2.0.7"
   }
 }

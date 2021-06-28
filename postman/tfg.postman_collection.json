@@ -6,46 +6,67 @@
 	},
 	"item": [
 		{
-			"name": "Open food facts get all elements",
-			"event": [
+			"name": "Api",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"var response = pm.response.json()",
-							"pm.test(\"Check_page\", function() {",
-							"    pm.expect(response.page).to.eql(1)",
-							"})",
-							"",
-							"pm.test(\"Response time is less than 1s\", function () {",
-							"    pm.expect(pm.response.responseTime).to.be.below(2000)",
-							"})"
-						],
-						"type": "text/javascript"
-					}
+					"name": "test aplication",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
 				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://es.openfoodfacts.org/.json",
-					"protocol": "https",
-					"host": [
-						"es",
-						"openfoodfacts",
-						"org"
+			]
+		},
+		{
+			"name": "Open Food Facts Api",
+			"item": [
+				{
+					"name": "Open food facts get all elements",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var response = pm.response.json()",
+									"pm.test(\"Check_page\", function() {",
+									"    pm.expect(response.page).to.eql(1)",
+									"})",
+									"",
+									"pm.test(\"Response time is less than 1s\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
 					],
-					"path": [
-						".json"
-					]
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://es.openfoodfacts.org/.json",
+							"protocol": "https",
+							"host": [
+								"es",
+								"openfoodfacts",
+								"org"
+							],
+							"path": [
+								".json"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }
