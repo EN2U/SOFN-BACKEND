@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Api",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ULL-ESIT-INF-TFG-2021/TFG-2021-Eduardo-Nuez-back.git"
+  },
+  "author": "Eduardo Nuez Wehbe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ULL-ESIT-INF-TFG-2021/TFG-2021-Eduardo-Nuez-back/issues"
+  },
+  "homepage": "https://github.com/ULL-ESIT-INF-TFG-2021/TFG-2021-Eduardo-Nuez-back#readme",
+  "dependencies": {
+    "newman": "^5.2.4",
+    "newman-reporter-htmlextra": "^1.21.0"
+  }
+}

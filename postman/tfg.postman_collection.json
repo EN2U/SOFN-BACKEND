@@ -1,0 +1,51 @@
+{
+	"info": {
+		"_postman_id": "8e3f46d2-19e0-4bfa-b10e-2271be948502",
+		"name": "tfg",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Open food facts get all elements",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var response = pm.response.json()",
+							"pm.test(\"Check_page\", function() {",
+							"    pm.expect(response.page).to.eql(1)",
+							"})",
+							"",
+							"pm.test(\"Response time is less than 1s\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://es.openfoodfacts.org/.json",
+					"protocol": "https",
+					"host": [
+						"es",
+						"openfoodfacts",
+						"org"
+					],
+					"path": [
+						".json"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
