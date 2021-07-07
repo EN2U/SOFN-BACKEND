@@ -4,6 +4,10 @@ const axios = require('axios');
 const router = express.Router()
 const openFoodFactsUrl = 'https://es.openfoodfacts.org/'
 
+
+/* ////////////////////////////////////////////////////////////////
+                Get elements if no filters selected
+//////////////////////////////////////////////////////////////// */
 router.get('/allElements', async (req, res) => {
 
     if (Object.keys(req.body).length === 1) {
@@ -34,6 +38,9 @@ router.get('/allElements', async (req, res) => {
     
 })
 
+/* ////////////////////////////////////////////////////////////////
+                Get producst filtered by name
+//////////////////////////////////////////////////////////////// */
 router.get('/searchElement', (req, res) => {
     console.log(req.body)
     if (Object.keys(req.body).length === 2) {

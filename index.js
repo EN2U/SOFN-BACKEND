@@ -15,7 +15,6 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.use(cors());
 
-// // Bring in the Passport Strategy
 
 // Routes (URL)
 app.use('/api/openFoodFacts', require('./routes/openFoodFacts'))
