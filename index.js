@@ -15,14 +15,10 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.use(cors());
 
-app.use(function (req, res) {
-    res.setHeader('Content-Type', 'text/plain')
-    res.write('you posted:\n')
-    res.end(JSON.stringify(req.body, null, 2))
-  })
 // // Bring in the Passport Strategy
 
 // Routes (URL)
+app.use('/api/openFoodFacts', require('./routes/openFoodFacts'))
 
 // Static files
 
