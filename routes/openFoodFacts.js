@@ -3,7 +3,6 @@ const openFoodFactsController = require('../controller/openFoodFactsController')
 
 
 const router = express.Router()
-const openFoodFactsCategoryUrl = 'https://es.openfoodfacts.org/categoria/'
 
 
 /* ////////////////////////////////////////////////////////////////

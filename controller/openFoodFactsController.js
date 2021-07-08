@@ -1,11 +1,11 @@
 const axios = require('axios');
-
+const asyncWrapper = require('../utils/async-wrapper').AsyncWrapper
 
 const openFoodFactsUrl = 'https://es.openfoodfacts.org/'
 const openFoodFactsCategoryUrl = 'https://es.openfoodfacts.org/categoria/'
 
 
-const openFoodFactsElements = async (req, res) => {
+const openFoodFactsElements = asyncWrapper(async (req, res) => {
     if (Object.keys(req.body).length === 1) {
         const data = await axios.get(`${openFoodFactsUrl}${req.body.page}.json`)
         .then(res =>  res.data)
@@ -31,9 +31,9 @@ const openFoodFactsElements = async (req, res) => {
             msg: "[ERROR] No page specified..."
         })
     }
-}
+})
 
-const openFoodFactsSeacrchELements = async (req, res) => {
+const openFoodFactsSeacrchELements = asyncWrapper(async (req, res) => {
 
     if (Object.keys(req.body).length === 2) {
         const data = await axios.get(`${openFoodFactsCategoryUrl}${req.body.product}/${req.body.page}.json`)
@@ -59,7 +59,7 @@ const openFoodFactsSeacrchELements = async (req, res) => {
             msg: '[ERROR] No page or product specified...!'
         })
     }
-}
+})
 
 
 
