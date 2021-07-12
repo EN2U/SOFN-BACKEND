@@ -56,6 +56,7 @@ const specs = swaggerJsDoc(options);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.use('/api/openFoodFacts', require('./routes/openFoodFacts'))
+app.use('/api/user', require('./routes/user'))
 
 // Static files
 
