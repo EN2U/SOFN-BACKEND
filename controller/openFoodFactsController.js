@@ -5,6 +5,9 @@ const openFoodFactsUrl = 'https://es.openfoodfacts.org/'
 const openFoodFactsCategoryUrl = 'https://es.openfoodfacts.org/categoria/'
 
 
+/* ////////////////////////////////////////////////////////////////
+                Get elements if no filters selected
+//////////////////////////////////////////////////////////////// */
 const openFoodFactsElements = asyncWrapper(async (req, res) => {
     if (Object.keys(req.body).length === 1) {
         const data = await axios.get(`${openFoodFactsUrl}${req.body.page}.json`)
@@ -33,6 +36,9 @@ const openFoodFactsElements = asyncWrapper(async (req, res) => {
     }
 })
 
+/* ////////////////////////////////////////////////////////////////
+                Get producst filtered by name
+//////////////////////////////////////////////////////////////// */
 const openFoodFactsSeacrchELements = asyncWrapper(async (req, res) => {
 
     if (Object.keys(req.body).length === 2) {
