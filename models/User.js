@@ -11,16 +11,14 @@ const User = new Schema ({
         type: String,
         required: [true, 'Please include your fullName...']
     },
-    location: [{
-        street: {
-            type: String,
-            required: [true, 'Please include a location...']
-        },
-        number: {
-            type: Number,
-            required: false
-        }
-    }],
+    street: {
+        type: String,
+        required: [true, 'Please include a location...']
+    },
+    number: {
+        type: Number,
+        required: false
+    },
     phone: {
         type: String,
         required: [true, 'Please include your phone...']

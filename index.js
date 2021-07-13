@@ -15,6 +15,7 @@ const credentials = fs.readFileSync('../Certificados/X509-cert-45290265833646736
 
 mongoose.connect('mongodb+srv://sreipeme.hvazi.mongodb.net/TFG?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority', {
     useNewUrlParser: true,
+    useCreateIndex:true,
     useUnifiedTopology: true,
     sslKey: credentials,
     sslCert: credentials 
