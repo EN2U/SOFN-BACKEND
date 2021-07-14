@@ -65,6 +65,22 @@ const router = express.Router()
  *       example:
  *          userName: test
  *          password: "1234"
+ *     remove:
+ *       type: object
+ *       required:
+ *         - password
+ *         - userName
+ *       properties:
+ *         userName:
+ *           type: string
+ *           description: User name to be removed
+ *         password:
+ *           type: string
+ *           description: Verify if user is trying to remove the account
+ *       example:
+ *          userName: test
+ *          password: "1234"
+ * 
  */       
 
  /**
@@ -103,7 +119,7 @@ router.post('/register', userController.registerUser)
  * @swagger
  * /api/user/login:
  *   post:
- *     summary: Login a user on the sistem
+ *     summary: Login user on the sistem
  *     tags: [User]
  *     requestBody:
  *       description: Optional description in *Markdown*
@@ -179,4 +195,83 @@ router.post('/register', userController.registerUser)
  */
 
 router.post('/login', userController.loginUser)
+
+/**
+ * @swagger
+ * /api/user/remove:
+ *   delete:
+ *     summary: Remove user on the sistem
+ *     tags: [User]
+ *     requestBody:
+ *       description: Optional description in *Markdown*
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/remove'
+ *     responses:
+ *       202:
+ *         description: Login was successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Petition was successfull
+ *                   example: true
+ *                 msg:
+ *                   type: string
+ *                   description: Informative message
+ *                   example: "[SUCCESS] Deleted 1 item."
+ *       400:
+ *         description: Unexpected error trying to remove user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Petition failed
+ *                   example: false
+ *                 msg:
+ *                   type: string
+ *                   description: Informative message
+ *                   example: "[ERROR] Delete failed with error: x"
+ *       401:
+ *         description: Password or UserName not match.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Petition failed
+ *                   example: false
+ *                 msg:
+ *                   type: string
+ *                   description: Informative message 
+ *                   example: "[ERROR] Password doesnt match..."
+ *       404:
+ *         description: Error evaluating password.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Petition failed
+ *                   example: false
+ *                 msg:
+ *                   type: string
+ *                   description: Informative message 
+ *                   example: "[ERROR] Error on password evaluation..."
+ *       500:
+ *         description: Comunication with the endpoint not working
+ */
+
+router.delete('/remove', userController.removeUser)
 module.exports = router
