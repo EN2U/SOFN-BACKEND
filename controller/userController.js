@@ -51,6 +51,11 @@ const registerUser = AsyncWrapper(async (req, res) => {
     }
 })
 
+const loginUser = (req, res) => {
+    return res.send("xd")
+}
+
 module.exports = {
-    registerUser
+    registerUser,
+    loginUser
 }
