@@ -1,4 +1,6 @@
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const key = 'mysecret'
 
 const initializeUser = (newUser, res) => {
     try {
@@ -26,7 +28,31 @@ const initializeUser = (newUser, res) => {
     }
 }
 
+const processUserData = (password, user, res) => {
+    bcrypt.compare(password, user.password)
+    .then(isMatch => {
+        if (!isMatch) return res.status(404).send({
+            success: false,
+            msg: `[ERROR] Password doesnt match...`
+        })
+        const payload = { _id: user._id, userName: user.userName, email: user.email }
+        jwt.sign(payload, key, { expiresIn: 86400000 }, (error, token) => {
+            if (error) return res.status(400).send({
+                success: false,
+                msg: `[ERROR] ${error}`
+            })
+            return res.status(200).send({
+                success: true,
+                token: token,
+                user: user,
+                msg: "[SUCCESS] Login successfully..."
+            })
+        })
+        
+    })
+}
 
 module.exports = {
-    initializeUser
+    initializeUser,
+    processUserData
 }

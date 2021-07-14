@@ -1,10 +1,8 @@
 const express = require('express')
 const userControllerUtils = require('../utils/userControllerUtils')
 const router = express.Router()
-const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const { AsyncWrapper } = require('../utils/async-wrapper')
-const key = 'mysecret'
 
 const User = require('../models/User')
 
@@ -51,9 +49,18 @@ const registerUser = AsyncWrapper(async (req, res) => {
     }
 })
 
-const loginUser = (req, res) => {
-    return res.send("xd")
-}
+const loginUser = AsyncWrapper( async(req, res, next, error) => {
+    User.findOne({
+        userName: req.body.userName
+    }).then(user => {
+        if (!user) return res.status(404).send({
+            success: false,
+            msg: `[ERROR] User not found...`
+        })
+
+        userControllerUtils.processUserData(req.body.password, user, res)
+    })
+})
 
 module.exports = {
     registerUser,
