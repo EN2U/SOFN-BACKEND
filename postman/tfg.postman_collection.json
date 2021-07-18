@@ -9,79 +9,190 @@
 			"name": "Api",
 			"item": [
 				{
-					"name": "test aplication",
-					"event": [
+					"name": "openFoodFactsConnection",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000",
-							"host": [
-								"localhost"
+							"name": "/api/openFoodFacts/allElemeents",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
 							],
-							"port": "3000"
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"page\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/api/openFoodFacts/allElements",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"openFoodFacts",
+										"allElements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/openFoodFacts/searchElement",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/plain",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"product\": \"chocolate\",\n    \"page\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/api/openFoodFacts/searchElement",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"openFoodFacts",
+										"searchElement"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Open Food Facts Api",
-			"item": [
+					]
+				},
 				{
-					"name": "Open food facts get all elements",
-					"event": [
+					"name": "user data",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"var response = pm.response.json()",
-									"pm.test(\"Check_page\", function() {",
-									"    pm.expect(response.page).to.eql(1)",
-									"})",
-									"",
-									"pm.test(\"Response time is less than 5s\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(5000)",
-									"})"
+							"name": "/api/user/register",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
 								],
-								"type": "text/javascript"
-							}
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userName\": \"Eduardo\",\n    \"fullName\": \"Eduardo Nuez Wehbe\",\n    \"location\": [\n        { \"street\": \"San cristóbal de la laguna\" },\n        { \"number\": 10 }\n    ],\n    \"phone\": 666666666,\n    \"email\": \"pepe@gmail.com\",\n    \"password\": 1234,\n    \"repeatPassword\": 1234\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/user/login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userName\": \"Eduardo\",\n    \"password\": 1234\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/user/remove",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userName\": \"test\",\n    \"password\": \"1234\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/remove",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										"remove"
+									]
+								}
+							},
+							"response": []
 						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://es.openfoodfacts.org/.json",
-							"protocol": "https",
-							"host": [
-								"es",
-								"openfoodfacts",
-								"org"
-							],
-							"path": [
-								".json"
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		}

@@ -7,7 +7,7 @@ const router = express.Router()
  * @swagger
  * components:
  *   schemas:
- *     register:
+ *     signup:
  *       type: object
  *       required:
  *         - userName
@@ -92,7 +92,7 @@ const router = express.Router()
 
  /**
  * @swagger
- * /api/user/register:
+ * /api/user/signup:
  *   post:
  *     summary: Register a new user
  *     tags: [User]
@@ -101,7 +101,7 @@ const router = express.Router()
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/register'
+ *             $ref: '#/components/schemas/signup'
  *     responses:
  *       201:
  *         description: Registration was successfull.
@@ -113,7 +113,7 @@ const router = express.Router()
  *         description: Comunication with the endpoint not working
  */
 
-router.post('/register', userController.registerUser)
+router.post('/signup', userController.registerUser)
 
  /**
  * @swagger
@@ -272,6 +272,6 @@ router.post('/login', userController.loginUser)
  *       500:
  *         description: Comunication with the endpoint not working
  */
-
+// /:id
 router.delete('/remove', userController.removeUser)
 module.exports = router

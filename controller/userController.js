@@ -5,49 +5,27 @@ const passport = require('passport')
 const { AsyncWrapper } = require('../utils/async-wrapper')
 const bcrypt = require('bcrypt')
 
-
 const User = require('../models/User')
 
 
 const registerUser = AsyncWrapper(async (req, res) => {
+    const user = new User(req.body)
 
-    res.setHeader('Content-Type', 'application/json')
-    
-    /* ///////////////////////////////////
-                Password Validation
-    /////////////////////////////////// */
+    try {
+        if (req.body.password !== req.body.repeatPassword) throw new Error("Password doesnt match")
+        await user.save()
+        console.log(user)
+        const token = await user.generateToken()
 
-    if (req.body.password !== req.body.repeatPassword) {
-        return res.status(422).send({
-            success: false,
-            msg: "[ERROR] Password not match..."
+        res.status(201).send({
+            user,
+            token
         })
-    } else {
-
-    /* ///////////////////////////////////
-                User Validation
-    /////////////////////////////////// */
-
-        const userName = await User.findOne({ userName: req.body.userName }).catch(error => {console.error(error)})
-        const mail = await User.findOne({ email: req.body.email }).catch(error => { console.error(error)})
-
-        if (userName) return res.status(422).send({
+    } catch (error) {
+        res.status(500).send({
             success: false,
-            msg: "[ERROR] Username is already taken..."
+            msg: `${error}`
         })
-        else if (mail) return res.status(422).send({
-            success: false,
-            msg: "[ERROR] Mail is already taken..."
-        }) 
-        else userControllerUtils.initializeUser(new User({
-            userName: req.body.userName,
-            fullName: req.body.fullName,
-            street: req.body.street,
-            number: req.body.number,
-            phone: req.body.phone,
-            email: req.body.email,
-            password: req.body.password
-        }), res)
     }
 })
 
@@ -81,14 +59,14 @@ const removeUser = AsyncWrapper(async(req, res, next, error) => {
                 User.deleteOne(user)
                     .then(result => res.status(202).send({
                         success: true,
-                        msg: `[SUCCESS] Deleted ${result.deletedCount} item.`
+                        msg: `[SUCCESS] Deleted ${result.deletedCount} item...`
                     }))
                     .catch(error => res.status(400).send({ 
                         success: false,
-                        msg: `[ERROR] Delete failed with error: ${error}`
+                        msg: `[ERROR] Delete failed with error: ${error}...`
                     }))
             }
-            else return res.status(401).send({ 
+            else return res.status(400).send({ 
                 success: false,
                 msg: "[ERROR] Password doesnt match..." 
             })
