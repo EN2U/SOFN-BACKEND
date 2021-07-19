@@ -67,9 +67,14 @@ const logout = AsyncWrapper(async (req, res, next) => {
     
 })
 
+const updateUser = AsyncWrapper(async (req, res, next) => {
+
+})
+
 module.exports = {
     registerUser,
     loginUser,
     deleteUser,
-    logout
+    logout,
+    updateUser
 }
