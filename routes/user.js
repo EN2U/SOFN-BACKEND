@@ -275,4 +275,6 @@ router.post('/login', userController.loginUser)
  */
 // /:id
 router.delete('/:id', auth,  userController.deleteUser)
+
+router.post('/logout/:id', auth, userController.logout)
 module.exports = router

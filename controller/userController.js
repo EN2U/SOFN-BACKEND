@@ -55,7 +55,16 @@ const deleteUser = AsyncWrapper(async(req, res, next) => {
 })
 
 const logout = AsyncWrapper(async (req, res, next) => {
-    return res.status(204).end()
+    try {
+        await User.findByIdAndUpdate({ _id: req.params.id }, { token: "" })
+        return res.status(200).end()
+    } catch (error) {
+        return res.status(400).send({
+            success: false,
+            msg: `${error}`
+        })
+    }
+    
 })
 
 module.exports = {

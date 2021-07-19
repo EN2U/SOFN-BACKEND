@@ -17,6 +17,7 @@ mongoose.connect('mongodb+srv://sreipeme.hvazi.mongodb.net/TFG?authSource=%24ext
     useNewUrlParser: true,
     useCreateIndex:true,
     useUnifiedTopology: true,
+	useFindAndModify: false,
     sslKey: credentials,
     sslCert: credentials 
 }).then(db => console.log(`DB is connected`))
