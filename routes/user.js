@@ -1,5 +1,6 @@
 const express = require('express')
 const userController = require('../controller/userController')
+const auth = require('../middleware/auth')
 
 const router = express.Router()
 
@@ -273,5 +274,5 @@ router.post('/login', userController.loginUser)
  *         description: Comunication with the endpoint not working
  */
 // /:id
-router.delete('/remove', userController.removeUser)
+router.delete('/:id', auth,  userController.deleteUser)
 module.exports = router

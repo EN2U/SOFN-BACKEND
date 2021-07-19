@@ -1,12 +1,7 @@
-var jwt = require("jwt-simple");
-var moment = require("moment");
-var config = require("./config");
+const jwt = require('jsonwebtoken')
+let config = require("./config")
 
 exports.createToken = function (user) {
-  var payload = {
-    sub: user._id,
-    iat: moment().unix(),
-    exp: moment().add(14, "days").unix(),
-  };
-  return jwt.encode(payload, config.TOKEN_SECRET);
+  const payload = { _id: user._id, userName: user.userName, email: user.email }
+  return jwt.sign(payload, config.TOKEN_SECRET, { expiresIn: 86400000 })
 };

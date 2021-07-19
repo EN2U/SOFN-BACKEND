@@ -9,20 +9,19 @@ const User = require('../models/User')
 
 
 const registerUser = AsyncWrapper(async (req, res) => {
+
     const user = new User(req.body)
 
     try {
         if (req.body.password !== req.body.repeatPassword) throw new Error("Password doesnt match")
         await user.save()
-        console.log(user)
         const token = await user.generateToken()
-
         res.status(201).send({
-            user,
-            token
+            user: user,
+            msg: "[SUCCESS] User created successfully!..."
         })
     } catch (error) {
-        res.status(500).send({
+        res.status(400).send({
             success: false,
             msg: `${error}`
         })
@@ -30,52 +29,38 @@ const registerUser = AsyncWrapper(async (req, res) => {
 })
 
 const loginUser = AsyncWrapper(async(req, res, next, error) => {
-    User.findOne({
-        userName: req.body.userName
-    }).then(user => {
-        if (!user) return res.status(404).send({
-            success: false,
-            msg: `[ERROR] User not found...`
-        })
 
-        userControllerUtils.processUserData(req.body.password, user, res)
-    })
+    try {
+        const user = await User.findByCredentials(req.body.email, req.body.password)
+        const token = await user.generateToken()
+        res.status(200).send({
+            user: user,
+            token: token,
+            msg: `[SUCCESS] Welcome ${user.userName}, you logged in...`
+        })
+    } catch (error) {
+        res.status(400).send({
+            success: false,
+            msg: `${error}`
+        })
+    }
 })
 
-const removeUser = AsyncWrapper(async(req, res, next, error) => {
-    User.findOne({
-        userName: req.body.userName
-    }).then(user => {
-        if (!user) return res.status(404).send({
-            success: false,
-            msg: `[ERROR] No document matches the provided user....`
-        })
-        bcrypt.compare(req.body.password, user.password, (error, data) => {
-            if (error) return res.status(404).send({
-                success: false,
-                msg: `[ERROR] Error on password evaluation ${error}..`
-            })
-            if (data) {
-                User.deleteOne(user)
-                    .then(result => res.status(202).send({
-                        success: true,
-                        msg: `[SUCCESS] Deleted ${result.deletedCount} item...`
-                    }))
-                    .catch(error => res.status(400).send({ 
-                        success: false,
-                        msg: `[ERROR] Delete failed with error: ${error}...`
-                    }))
-            }
-            else return res.status(400).send({ 
-                success: false,
-                msg: "[ERROR] Password doesnt match..." 
-            })
-        })
-    })
+const deleteUser = AsyncWrapper(async(req, res, next) => {
+        await User.findByIdAndDelete(req.params.id).exec()
+            .then(doc => {
+                if (!doc) return res.status(404).end()
+                return res.status(204).end()
+            }).catch(error => next(error))
+})
+
+const logout = AsyncWrapper(async (req, res, next) => {
+    return res.status(204).end()
 })
 
 module.exports = {
     registerUser,
     loginUser,
-    removeUser
+    deleteUser,
+    logout
 }

@@ -4,8 +4,8 @@ const service = require('../services/service')
 const bcrypt = require('bcrypt')
 
 
-var validateEmail = (email) => {
-    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+let validateEmail = (email) => {
+    let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email)
 }
 
@@ -61,12 +61,21 @@ User.methods.comparePassword = function(plaintext, callback) {
 
 User.methods.generateToken = async function() {
     const user = this
+    console.log("xd")
     const token = service.createToken(user)
-    
     user.token = token
-
     await user.save()
 
     return token
+}
+
+User.statics.findByCredentials = async function (email, password) {
+    const user = await this.findOne({ email: email })
+    if (!user) throw new Error('Unable to login')
+    
+    const isMatch = await bcrypt.compare(password, user.password)
+
+    if (isMatch) return user
+    else throw new Error('Unable to login')
 }
 module.exports = mongoose.model('User', User)
