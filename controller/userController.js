@@ -1,21 +1,24 @@
 const { AsyncWrapper } = require('../utils/async-wrapper')
 
 const User = require('../models/User')
-
-const registerUser = AsyncWrapper(async (req, res) => {
+const ErrorRequest = require('../ErrorHandling/requestError')
+const registerUser = AsyncWrapper(async (req, res, next) => {
   const user = new User(req.body)
 
   try {
-    if (req.body.password !== req.body.repeatPassword) throw new Error('Password doesnt match')
+    console.log('xd')
+    if (req.body.password !== req.body.repeatPassword) {
+      throw new ErrorRequest('[ERROR] password doesnt match...', 401)
+    }
     await user.save()
     res.status(201).send({
       user: user,
       msg: '[SUCCESS] User created successfully!...'
     })
   } catch (error) {
-    res.status(401).send({
+    res.status(error.status).send({
       success: false,
-      error: `${error}`
+      error: `${error.message}`
     })
   }
 })
