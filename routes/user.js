@@ -4,6 +4,8 @@ const auth = require('../middleware/auth')
 
 const router = express.Router()
 
+
+router.get('/profile/:id', auth, userController.getProfile)
 /**
  * @swagger
  * components:
@@ -276,7 +278,8 @@ router.post('/login', userController.loginUser)
 // /:id
 router.delete('/:id', auth,  userController.deleteUser)
 
-router.post('/logout/:id', auth, userController.logout)
 
 router.put('/:id', auth, userController.updateUser)
+
+
 module.exports = router
