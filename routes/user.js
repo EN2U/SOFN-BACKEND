@@ -4,7 +4,6 @@ const auth = require('../middleware/auth')
 
 const router = express.Router()
 
-
 router.get('/profile/:id', auth, userController.getProfile)
 /**
  * @swagger
@@ -29,10 +28,10 @@ router.get('/profile/:id', auth, userController.getProfile)
  *         street:
  *           type: string
  *           description: Street where the user lives in
- *         number: 
+ *         number:
  *           type: number
  *           description: Number of the house
- *         phone: 
+ *         phone:
  *           type: number
  *           description: Telephone contact
  *         email:
@@ -43,7 +42,7 @@ router.get('/profile/:id', auth, userController.getProfile)
  *           description: Password account
  *         repeatPassword:
  *           type: string
- *           description: Security attribute to check if the password was successfully introduced  
+ *           description: Security attribute to check if the password was successfully introduced
  *       example:
  *          userName: test
  *          fullName: test
@@ -83,17 +82,17 @@ router.get('/profile/:id', auth, userController.getProfile)
  *       example:
  *          userName: test
  *          password: "1234"
- * 
- */       
+ *
+ */
 
- /**
+/**
   * @swagger
   * tags:
   *   name: User
   *   description: User account info endpoints
   */
 
- /**
+/**
  * @swagger
  * /api/user/signup:
  *   post:
@@ -111,14 +110,14 @@ router.get('/profile/:id', auth, userController.getProfile)
  *       400:
  *         description: Error when trying to save the new user on database.
  *       422:
- *         description: Password, mail or username with bad format.  
+ *         description: Password, mail or username with bad format.
  *       500:
  *         description: Comunication with the endpoint not working
  */
 
 router.post('/signup', userController.registerUser)
 
- /**
+/**
  * @swagger
  * /api/user/login:
  *   post:
@@ -255,7 +254,7 @@ router.post('/login', userController.loginUser)
  *                   example: false
  *                 msg:
  *                   type: string
- *                   description: Informative message 
+ *                   description: Informative message
  *                   example: "[ERROR] Password doesnt match..."
  *       404:
  *         description: Error evaluating password.
@@ -270,16 +269,14 @@ router.post('/login', userController.loginUser)
  *                   example: false
  *                 msg:
  *                   type: string
- *                   description: Informative message 
+ *                   description: Informative message
  *                   example: "[ERROR] Error on password evaluation..."
  *       500:
  *         description: Comunication with the endpoint not working
  */
 // /:id
-router.delete('/:id', auth,  userController.deleteUser)
-
+router.delete('/:id', auth, userController.deleteUser)
 
 router.put('/:id', auth, userController.updateUser)
-
 
 module.exports = router

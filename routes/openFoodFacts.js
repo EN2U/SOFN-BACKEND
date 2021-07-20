@@ -32,16 +32,16 @@ const router = express.Router()
  *        example:
  *          page: 1
  *          product: chocolate
- */       
+ */
 
- /**
+/**
   * @swagger
   * tags:
   *   name: OpenFoodFacts
   *   description: OpenFoodFacts API
   */
 
- /**
+/**
  * @swagger
  * /api/openFoodFacts/allElements:
  *   post:
@@ -59,12 +59,12 @@ const router = express.Router()
  *       204:
  *         description: Reached the last page with products avalaible.
  *       400:
- *         description: No page selected.  
+ *         description: No page selected.
  *       500:
  *         description: Comunication with the endpoint not working
  */
 router.post('/allElements', openFoodFactsController.openFoodFactsElements)
- 
+
 /**
  * @swagger
  * /api/openFoodFacts/searchElement:
@@ -83,7 +83,7 @@ router.post('/allElements', openFoodFactsController.openFoodFactsElements)
  *       204:
  *         description: Reached the last page with products avalaible.
  *       400:
- *         description: No page selected.  
+ *         description: No page selected.
  *       500:
  *         description: Comunication with the endpoint not working
  */
