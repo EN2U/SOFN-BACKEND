@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
+const ErrorRequest = require('../ErrorHandling/requestError')
 
 const service = require('../services/service')
 const bcrypt = require('bcrypt')
@@ -47,17 +48,28 @@ const User = new Schema({
   }
 })
 
+/* /////////////////////////////////////////////////////////////////////
+                          User Schema Hooks
+///////////////////////////////////////////////////////////////////// */
+
 User.pre('save', function (next) {
-  if (!this.isModified('password')) {
-    return next()
-  }
   this.password = bcrypt.hashSync(this.password, 10)
   next()
 })
 
-User.methods.comparePassword = function (plaintext, callback) {
-  return callback(null, bcrypt.compareSync(plaintext, this.password))
-}
+User.pre('findOneAndUpdate', function (next) {
+  this._update.password = bcrypt.hashSync(this._update.password, 10)
+  next()
+})
+
+User.pre('findOneAndDelete', function (next) {
+  console.log('xd')
+  next()
+})
+
+/* /////////////////////////////////////////////////////////////////////
+                          User Schema Methods
+///////////////////////////////////////////////////////////////////// */
 
 User.methods.generateToken = async function () {
   const user = this
@@ -68,13 +80,19 @@ User.methods.generateToken = async function () {
   return token
 }
 
+/* /////////////////////////////////////////////////////////////////////
+                          User Schema Statics
+///////////////////////////////////////////////////////////////////// */
+
 User.statics.findByCredentials = async function (email, password) {
   const user = await this.findOne({ email: email })
-  if (!user) throw new Error({ status: 404, message: '[ERROR] Email not found...' })
+  if (!user) throw new ErrorRequest('[ERROR] Invalid Email', 401)
+  console.log(user.passwoird)
 
   const isMatch = await bcrypt.compare(password, user.password)
 
   if (isMatch) return user
-  else throw new Error({ status: 400, message: '[ERROR] Password doesnt match...' })
+  else throw new ErrorRequest('[ERROR] Invalid Password', 401)
 }
+
 module.exports = mongoose.model('User', User)
