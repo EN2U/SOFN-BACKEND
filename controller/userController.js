@@ -1,7 +1,7 @@
 const { AsyncWrapper } = require('../utils/async-wrapper')
 
 const User = require('../models/User')
-const ErrorRequest = require('../ErrorHandling/requestError')
+const ErrorRequest = require('../errorHandling/requestError')
 
 /* /////////////////////////////////////////////////////////////////////
                             Get petitions
@@ -56,7 +56,7 @@ const registerUser = AsyncWrapper(async (req, res, next) => {
         error: `${error.message}`
       })
     } else {
-      return res.status(401).json({
+      return res.status(400).json({
         success: false,
         error: `${error}`
       })

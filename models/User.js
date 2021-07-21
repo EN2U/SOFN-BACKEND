@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
-const ErrorRequest = require('../ErrorHandling/requestError')
+const ErrorRequest = require('../errorHandling/requestError')
 
 const service = require('../services/service')
 const bcrypt = require('bcrypt')

@@ -2,11 +2,12 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 
-const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUI = require('swagger-ui-express')
 
 const mongoose = require('mongoose')
 const fs = require('fs')
+const YAML = require('yamljs')
+const swaggerDocument = YAML.load('./test.yaml')
 
 const app = express()
 
@@ -31,27 +32,8 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.use(cors())
 
-const options = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'SREIPEME API',
-      version: '1.0.0',
-      description: 'System prototype for the collection and standardization ofinformation for the planning and evaluation of healthy,sustainable and quality school menus'
-    },
-    servers: [
-      {
-        url: 'http://localhost:3000'
-      }
-    ]
-  },
-  apis: ['./routes/*.js']
-}
-
-const specs = swaggerJsDoc(options)
-
 // Routes (URL)
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs))
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 app.use('/api/openFoodFacts', require('./routes/openFoodFacts'))
 app.use('/api/user', require('./routes/user'))
