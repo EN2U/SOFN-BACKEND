@@ -1,7 +1,9 @@
 const express = require('express')
-const userController = require('../controller/enterprise')
+const enterpriseController = require('../controller/enterpriseController')
 const auth = require('../middleware/auth')
 
 const router = express.Router()
+
+router.post('/', enterpriseController.createEnterprise)
 
 module.exports = router

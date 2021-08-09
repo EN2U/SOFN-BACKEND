@@ -35,6 +35,10 @@ const Enterprise = new Schema({
     type: Number,
     required: [true, 'Please select a contact phone...']
   },
+  user_id: {
+    type: Schema.Types.ObjectId,
+    required: [true, 'User needed...']
+  },
   website: {
     type: String
   },
@@ -58,7 +62,44 @@ const Enterprise = new Schema({
     data: Buffer,
     contentType: String
   },
-  address: [
+  long_description: {
+    type: String
+  },
+  short_description: {
+    type: String
+  },
+
+  product: [
+    {
+      name: {
+        type: String,
+        required: [true, 'Please add a name of the product...']
+      },
+      description: {
+        type: String
+      },
+      unit_size: {
+        type: Number,
+        required: [true, 'Please add the amount of the product you wanna sell...']
+      },
+      unit_type: {
+        type: String
+      },
+      category: {
+        type: Object
+      },
+      available_on: {
+        type: Date
+      },
+      deleted_on: {
+        type: Date
+      },
+      price: {
+        type: Number
+      }
+    }
+  ],
+  address:
     {
       first_address: {
         type: String,
@@ -80,13 +121,6 @@ const Enterprise = new Schema({
         required: [true, 'Please add a city...']
       }
     }
-  ],
-  long_description: {
-    type: String
-  },
-  short_description: {
-    type: String
-  }
 
 }, {
   timestamps: {
