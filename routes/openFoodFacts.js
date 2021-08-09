@@ -89,4 +89,6 @@ router.post('/allElements', openFoodFactsController.openFoodFactsElements)
  */
 router.post('/searchElement', openFoodFactsController.openFoodFactsSeacrchELements)
 
+router.get('/categories', openFoodFactsController.getCategories)
+
 module.exports = router

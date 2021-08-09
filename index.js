@@ -38,6 +38,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use('/api/openFoodFacts', require('./routes/openFoodFacts'))
 app.use('/api/user', require('./routes/user'))
 app.use('/enterprise', require('./routes/enterprise'))
+app.use('/productCategories', require('./routes/productCategories'))
 
 // Static files
 
