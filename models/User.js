@@ -11,27 +11,6 @@ const validateEmail = (email) => {
 }
 
 const User = new Schema({
-  userName: {
-    type: String,
-    required: [true, 'Please include an username...'],
-    unique: true
-  },
-  fullName: {
-    type: String,
-    required: [true, 'Please include your fullName...']
-  },
-  street: {
-    type: String,
-    required: [true, 'Please include a location...']
-  },
-  number: {
-    type: Number,
-    required: false
-  },
-  phone: {
-    type: String,
-    required: [true, 'Please include your phone...']
-  },
   email: {
     type: String,
     required: [true, 'Please include your email...'],
@@ -63,7 +42,6 @@ User.pre('findOneAndUpdate', function (next) {
 })
 
 User.pre('findOneAndDelete', function (next) {
-  console.log('xd')
   next()
 })
 
