@@ -22,6 +22,10 @@ const User = new Schema({
     required: [true, 'Please include your password...'],
     minlength: 6
   },
+  role: {
+    type: String,
+    required: [true, 'Please include your role']
+  },
   token: {
     type: String
   }
@@ -32,7 +36,8 @@ const User = new Schema({
 ///////////////////////////////////////////////////////////////////// */
 
 User.pre('save', function (next) {
-  this.password = bcrypt.hashSync(this.password, 10)
+  console.log(this.password)
+  this.password = bcrypt.hash(this.password, 10)
   next()
 })
 
@@ -65,10 +70,11 @@ User.methods.generateToken = async function () {
 User.statics.findByCredentials = async function (email, password) {
   const user = await this.findOne({ email: email })
   if (!user) throw new ErrorRequest('[ERROR] Invalid Email', 401)
-  console.log(user.passwoird)
 
-  const isMatch = await bcrypt.compare(password, user.password)
+  const pass = await bcrypt.hash(password, 10)
 
+  const isMatch = await bcrypt.compare(user.password, pass)
+  console.log(isMatch)
   if (isMatch) return user
   else throw new ErrorRequest('[ERROR] Invalid Password', 401)
 }

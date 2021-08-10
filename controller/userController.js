@@ -36,15 +36,16 @@ const getProfile = AsyncWrapper(async (req, res) => {
                             Post petitions
 ///////////////////////////////////////////////////////////////////// */
 
-const registerUser = AsyncWrapper(async (req, res, next) => {
+const signup = AsyncWrapper(async (req, res, next) => {
+  req.body.role = 'user'
   const user = new User(req.body)
-
   try {
-    if (req.body.password !== req.body.repeatPassword) {
+    if (req.body.password !== req.body.confirmPassword) {
       throw new ErrorRequest('[ERROR] password doesnt match...', 400)
     }
+    console.log(user)
     await user.save()
-    res.status(201).send({
+    return res.status(201).send({
       success: true,
       user: user,
       msg: '[SUCCESS] User created successfully!...'
@@ -65,14 +66,16 @@ const registerUser = AsyncWrapper(async (req, res, next) => {
 })
 
 const loginUser = AsyncWrapper(async (req, res) => {
+  console.log(req.body)
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password)
     if (!user) throw new ErrorRequest('[ERROR] User not found...', 404)
     const token = await user.generateToken()
-    res.status(200).send({
+    return res.status(200).send({
       user: user,
       token: token,
-      msg: `[SUCCESS] Welcome ${user.userName}, you logged in...`
+      success: true,
+      msg: `[SUCCESS] Welcome ${user.email}, you logged in...`
     })
   } catch (error) {
     if (error.status !== undefined) {
@@ -169,7 +172,7 @@ const updateUser = AsyncWrapper(async (req, res) => {
 
 module.exports = {
   getProfile,
-  registerUser,
+  signup,
   loginUser,
   logout,
   deleteUser,
