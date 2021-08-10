@@ -22,6 +22,23 @@ const initializeCategories = AsyncWrapper(async (req, res) => {
   }
 })
 
+const getCategories = AsyncWrapper(async (req, res) => {
+  try {
+    const data = await ProductCategories.find()
+    return res.status(200).send({
+      status: true,
+      msg: 'All returned',
+      data: data
+    })
+  } catch (error) {
+    return res.status(400).send({
+      status: false,
+      msg: error
+    })
+  }
+})
+
 module.exports = {
-  initializeCategories
+  initializeCategories,
+  getCategories
 }

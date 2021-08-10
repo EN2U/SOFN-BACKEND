@@ -6,4 +6,6 @@ const router = express.Router()
 
 router.post('/', productCategoriesController.initializeCategories)
 
+router.get('/', productCategoriesController.getCategories)
+
 module.exports = router
