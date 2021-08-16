@@ -149,6 +149,7 @@ const deleteUser = AsyncWrapper(async (req, res, next) => {
 
 const updateUser = AsyncWrapper(async (req, res) => {
   try {
+    console.log(req.body)
     const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body)
     if (!user) throw new ErrorRequest('[ERROR] User not found...', 404)
     return res.status(200).send({
