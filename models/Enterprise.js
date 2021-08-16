@@ -28,8 +28,7 @@ const Enterprise = new Schema({
     required: [true, 'Please select if you are a productor...']
   },
   company_number: {
-    type: String,
-    unique: true
+    type: String
   },
   contact_phone: {
     type: Number,
@@ -116,9 +115,9 @@ const Enterprise = new Schema({
         type: String,
         required: [true, 'Please add a province...']
       },
-      city: {
+      country: {
         type: String,
-        required: [true, 'Please add a city...']
+        required: [true, 'Please add a country...']
       }
     }
 

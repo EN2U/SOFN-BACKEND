@@ -66,14 +66,15 @@ const signup = AsyncWrapper(async (req, res, next) => {
 })
 
 const loginUser = AsyncWrapper(async (req, res) => {
-  console.log(req.body)
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password)
     if (!user) throw new ErrorRequest('[ERROR] User not found...', 404)
     const token = await user.generateToken()
     return res.status(200).send({
-      user: user,
+      user: user._id,
+      role: user.role,
       token: token,
+      email: user.email,
       success: true,
       msg: `[SUCCESS] Welcome ${user.email}, you logged in...`
     })

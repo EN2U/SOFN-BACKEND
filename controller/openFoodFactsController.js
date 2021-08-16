@@ -15,6 +15,7 @@ const openFoodFactsCategories = 'https://es.openfoodfacts.org/categories.json'
 // _id, product_name, generic_name_es, allergens, brands
 const openFoodFactsElements = AsyncWrapper(async (req, res) => {
   if (Object.keys(req.body).length === 1) {
+    console.log('xd')
     try {
       const openFoodFactsProducts = await axios.get(`${openFoodFactsUrl}${req.body.page}.json`)
 

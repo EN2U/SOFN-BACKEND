@@ -3,7 +3,7 @@ const { Schema } = mongoose
 const ErrorRequest = require('../errorHandling/requestError')
 
 const service = require('../services/service')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 const validateEmail = (email) => {
   const re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
@@ -35,9 +35,11 @@ const User = new Schema({
                           User Schema Hooks
 ///////////////////////////////////////////////////////////////////// */
 
-User.pre('save', function (next) {
-  console.log(this.password)
-  this.password = bcrypt.hash(this.password, 10)
+User.pre('save', async function (next) {
+  const user = this
+  if (user.isModified('password')) {
+    this.password = await bcrypt.hash(this.password, 10)
+  }
   next()
 })
 
@@ -71,10 +73,8 @@ User.statics.findByCredentials = async function (email, password) {
   const user = await this.findOne({ email: email })
   if (!user) throw new ErrorRequest('[ERROR] Invalid Email', 401)
 
-  const pass = await bcrypt.hash(password, 10)
+  const isMatch = bcrypt.compareSync(password, user.password)
 
-  const isMatch = await bcrypt.compare(user.password, pass)
-  console.log(isMatch)
   if (isMatch) return user
   else throw new ErrorRequest('[ERROR] Invalid Password', 401)
 }
