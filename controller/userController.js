@@ -43,8 +43,8 @@ const signup = AsyncWrapper(async (req, res, next) => {
     if (req.body.password !== req.body.confirmPassword) {
       throw new ErrorRequest('[ERROR] password doesnt match...', 400)
     }
-    console.log(user)
-    await user.save()
+    const isValid = await user.save()
+    console.log(isValid)
     return res.status(201).send({
       success: true,
       user: user,
@@ -149,9 +149,15 @@ const deleteUser = AsyncWrapper(async (req, res, next) => {
 
 const updateUser = AsyncWrapper(async (req, res) => {
   try {
-    console.log(req.body)
-    const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body)
+    const user = await User.findByUserId(req.params.id, req.body.password)
     if (!user) throw new ErrorRequest('[ERROR] User not found...', 404)
+
+    user.email = req.body.email
+    if (req.body.newPassword !== '') {
+      user.password = req.body.newPassword
+      await user.save()
+    } else await user.save()
+
     return res.status(200).send({
       success: true,
       user: user,
