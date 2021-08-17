@@ -44,8 +44,6 @@ User.pre('save', async function (next) {
   next()
 })
 
-User.post('save', schemaMiddlewareError)
-
 User.pre('findOneAndUpdate', function (next) {
   this._update.password = bcrypt.hashSync(this._update.password, 10)
   next()
@@ -54,6 +52,10 @@ User.pre('findOneAndUpdate', function (next) {
 User.pre('findOneAndDelete', function (next) {
   next()
 })
+
+User.post('save', schemaMiddlewareError)
+User.post('findOneAndUpdate', schemaMiddlewareError)
+User.post('findOneAndDelete', schemaMiddlewareError)
 
 /* /////////////////////////////////////////////////////////////////////
                           User Schema Methods

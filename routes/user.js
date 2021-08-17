@@ -11,7 +11,7 @@ router.post('/signup', userController.signup)
 router.post('/login', userController.loginUser)
 
 // /:id
-router.delete('/:id', auth, userController.deleteUser)
+router.delete('/:id', userController.deleteUser)
 
 router.put('/:id', userController.updateUser)
 

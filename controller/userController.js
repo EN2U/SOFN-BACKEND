@@ -122,11 +122,15 @@ const logout = AsyncWrapper(async (req, res, next) => {
 
 const deleteUser = AsyncWrapper(async (req, res, next) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id).exec()
+    console.log(req.params.id, req.body)
+    const user = await User.findByUserId(req.params.id, req.body.password)
     if (!user) throw new ErrorRequest('[ERROR] User not found...', 404)
+
+    await user.remove()
+
     return res.status(200).send({
       success: true,
-      error: '[SUCCESS] User deleted successfully'
+      msg: '[SUCCESS] User deleted successfully'
     })
   } catch (error) {
     if (error.status !== undefined) {
@@ -160,7 +164,7 @@ const updateUser = AsyncWrapper(async (req, res) => {
 
     return res.status(200).send({
       success: true,
-      user: user,
+      email: user.email,
       msg: '[SUCCESS] User updated successfully!...'
     })
   } catch (error) {
