@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 const ErrorRequest = require('../errorHandling/requestError')
 
-const Role = new Schema({
+const Bedca = new Schema({
   f_id: {
     type: String
   },
@@ -42,7 +42,7 @@ const Role = new Schema({
   vitamina_D: {
     type: String
   },
-  vitamina_Evi: {
+  vitamina_E: {
     type: String
   },
   folato: {
@@ -95,4 +95,4 @@ const Role = new Schema({
   }
 })
 
-module.exports = mongoose.model('Role', Role)
+module.exports = mongoose.model('Bedca', Bedca)
