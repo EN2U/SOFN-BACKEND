@@ -39,6 +39,7 @@ app.use('/openFoodFacts', require('./routes/openFoodFacts'))
 app.use('/user', require('./routes/user'))
 app.use('/enterprise', require('./routes/enterprise'))
 app.use('/productCategories', require('./routes/productCategories'))
+app.use('/bedca', require('./routes/bedca'))
 
 // Static files
 
