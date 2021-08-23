@@ -11,5 +11,8 @@ router.put('/details', enterpriseController.updateEnterpriseDetails)
 router.put('/logo', enterpriseController.updateLogo)
 router.put('/banner', enterpriseController.updateBanner)
 router.put('/social', enterpriseController.updateSocialMedia)
+router.put('/', enterpriseController.updateEnterprise)
+
+router.get('/:id', enterpriseController.getEnterpriseProfile)
 
 module.exports = router
