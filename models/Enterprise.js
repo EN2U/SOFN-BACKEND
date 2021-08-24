@@ -85,15 +85,12 @@ const Enterprise = new Schema({
         type: String
       },
       category: {
-        type: Object
-      },
-      available_on: {
-        type: Date
-      },
-      deleted_on: {
-        type: Date
+        type: String
       },
       price: {
+        type: Number
+      },
+      ammount: {
         type: Number
       }
     }

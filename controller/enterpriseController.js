@@ -147,8 +147,55 @@ const updateEnterprise = AsyncWrapper(async (req, res) => {
 
 const getEnterpriseProfile = AsyncWrapper(async (req, res) => {
   try {
-    console.log(req.params.id)
     const enterprise = await Enterprise.find({ user_id: req.params.id })
+    if (!enterprise) throw new ErrorRequest('[ERROR] Enterprise not found...', 404)
+    return res.status(200).send({
+      success: true,
+      enterprise: enterprise,
+      msg: '[SUCCESS] User updated successfully!...'
+    })
+  } catch (error) {
+    if (error.status !== undefined) {
+      return res.status(error.status).send({
+        success: false,
+        error: `${error.message}`
+      })
+    } else {
+      return res.status(400).json({
+        success: false,
+        error: `${error}`
+      })
+    }
+  }
+})
+
+const getEnterpriseById = AsyncWrapper(async (req, res) => {
+  try {
+    const enterprise = await Enterprise.findOne({ _id: req.body.enterprise_id })
+    if (!enterprise) throw new ErrorRequest('[ERROR] Enterprise not found...', 404)
+    return res.status(200).send({
+      success: true,
+      enterprise: enterprise,
+      msg: '[SUCCESS] New product added!...'
+    })
+  } catch (error) {
+    if (error.status !== undefined) {
+      return res.status(error.status).send({
+        success: false,
+        error: `${error.message}`
+      })
+    } else {
+      return res.status(400).json({
+        success: false,
+        error: `${error}`
+      })
+    }
+  }
+})
+
+const updateProduct = AsyncWrapper(async (req, res) => {
+  try {
+    const enterprise = await Enterprise.updateOne({ _id: req.body.enterprise_id }, { $push: { product: req.body.product } })
     if (!enterprise) throw new ErrorRequest('[ERROR] Enterprise not found...', 404)
     return res.status(200).send({
       success: true,
@@ -177,5 +224,7 @@ module.exports = {
   updateBanner,
   updateSocialMedia,
   getEnterpriseProfile,
-  updateEnterprise
+  updateEnterprise,
+  getEnterpriseById,
+  updateProduct
 }

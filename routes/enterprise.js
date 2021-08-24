@@ -14,5 +14,7 @@ router.put('/social', enterpriseController.updateSocialMedia)
 router.put('/', enterpriseController.updateEnterprise)
 
 router.get('/:id', enterpriseController.getEnterpriseProfile)
+router.post('/getSelected', enterpriseController.getEnterpriseById)
+router.post('/newProduct', enterpriseController.updateProduct)
 
 module.exports = router

@@ -1,5 +1,4 @@
 const { AsyncWrapper } = require('../utils/async-wrapper')
-const axios = require('axios')
 
 const ProductCategories = require('../models/ProductCategories')
 const ErrorRequest = require('../errorHandling/requestError')
@@ -7,9 +6,15 @@ const _ = require('lodash')
 
 const initializeCategories = AsyncWrapper(async (req, res) => {
   try {
-    const data = await axios.get('http://localhost:3000/api/openFoodFacts/categories')
-    const x = await ProductCategories.insertMany(data.data.data)
-    console.log(x)
+    const x = await ProductCategories.insertMany([
+      { name: 'lacteos' },
+      { name: 'Frutas y verduras' },
+      { name: 'legumbres' },
+      { name: 'Tubérculos' },
+      { name: 'Frutos secos' },
+      { name: 'Carne, pescado y huevos' },
+      { name: 'Aceites, grasas y mantequillas' }])
+    if (!x) throw new ErrorRequest('[ERROR] Something unexpected ocurred ', 400)
     return res.status(200).send({
       status: true,
       msg: 'all saved'
