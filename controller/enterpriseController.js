@@ -176,7 +176,7 @@ const getEnterpriseById = AsyncWrapper(async (req, res) => {
     return res.status(200).send({
       success: true,
       enterprise: enterprise,
-      msg: '[SUCCESS] New product added!...'
+      msg: '[SUCCESS] New product added!!...'
     })
   } catch (error) {
     if (error.status !== undefined) {
