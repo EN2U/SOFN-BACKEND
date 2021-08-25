@@ -87,7 +87,8 @@ router.post('/allElements', openFoodFactsController.openFoodFactsElements)
  *       500:
  *         description: Comunication with the endpoint not working
  */
-router.post('/searchElement', openFoodFactsController.openFoodFactsSeacrchELements)
+
+router.post('/findByProduct', openFoodFactsController.openFoodFactsFindByProduct)
 
 router.get('/categories', openFoodFactsController.getCategories)
 
