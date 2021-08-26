@@ -3,9 +3,6 @@ const AsyncWrapper = require('../utils/async-wrapper').AsyncWrapper
 const _ = require('lodash')
 const openFoodFactsUtils = require('../utils/openFoodFacts')
 
-const openFoodFactsUrl =
-'https://es.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&page_size=96&json=true%22&page='
-
 const openFoodFactsCategories = 'https://es.openfoodfacts.org/categories.json'
 
 /* ////////////////////////////////////////////////////////////////
@@ -76,7 +73,6 @@ const openFoodFactsElements = AsyncWrapper(async (req, res) => {
                 Get producst filtered by name
 //////////////////////////////////////////////////////////////// */
 const openFoodFactsFindByProduct = AsyncWrapper(async (req, res) => {
-  console.log(Object.keys(req.body).length)
   if (Object.keys(req.body).length === 2) {
     try {
       const config = {

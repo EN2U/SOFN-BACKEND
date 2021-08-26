@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 const ErrorRequest = require('../errorHandling/requestError')
+const schemaMiddlewareError = require('../middleware/schemaError')
 
 const Bedca = new Schema({
   f_id: {
@@ -94,5 +95,8 @@ const Bedca = new Schema({
     type: String
   }
 })
+
+Bedca.post('save', schemaMiddlewareError)
+Bedca.post('find', schemaMiddlewareError)
 
 module.exports = mongoose.model('Bedca', Bedca)

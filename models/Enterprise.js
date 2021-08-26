@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 const ErrorRequest = require('../errorHandling/requestError')
+const schemaMiddlewareError = require('../middleware/schemaError')
 
 const validateEmail = (email) => {
   const re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
@@ -124,5 +125,11 @@ const Enterprise = new Schema({
     updatedAt: 'updated_at'
   }
 })
+
+Enterprise.post('save', schemaMiddlewareError)
+Enterprise.post('findOneAndUpdate', schemaMiddlewareError)
+Enterprise.post('findOne', schemaMiddlewareError)
+Enterprise.post('find', schemaMiddlewareError)
+Enterprise.post('updateOne', schemaMiddlewareError)
 
 module.exports = mongoose.model('Enterprise', Enterprise)

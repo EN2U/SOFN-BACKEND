@@ -44,7 +44,7 @@ const signup = AsyncWrapper(async (req, res, next) => {
       throw new ErrorRequest('[ERROR] password doesnt match...', 400)
     }
     const isValid = await user.save()
-    console.log(isValid)
+    if (!isValid) throw new ErrorRequest('[ERROR] Error saving user...', 400)
     return res.status(201).send({
       success: true,
       user: user,
@@ -122,7 +122,6 @@ const logout = AsyncWrapper(async (req, res, next) => {
 
 const deleteUser = AsyncWrapper(async (req, res, next) => {
   try {
-    console.log(req.params.id, req.body)
     const user = await User.findByUserId(req.params.id, req.body.password)
     if (!user) throw new ErrorRequest('[ERROR] User not found...', 404)
 

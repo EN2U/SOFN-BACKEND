@@ -3,7 +3,6 @@ const fs = require('fs')
 let bedcaJson = require('../../data/bedcaDatabase.json')
 
 const _ = require('lodash')
-console.log(Object.keys(bedcaJson[0]))
 bedcaJson = bedcaJson.map(element => {
   return _.pick(element, [
     'f_id',
@@ -57,7 +56,6 @@ bedcaJson.map((element) => {
   delete Object.assign(element, { zinc: element['zinc (cinc)'] })['zinc (cinc)']
 })
 
-console.log(bedcaJson)
 fs.writeFile('./data/parsedJson.json', JSON.stringify(bedcaJson), (error) => {
   if (error) { console.error(error); return };
   console.log('File has been created')

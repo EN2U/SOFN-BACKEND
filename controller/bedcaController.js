@@ -7,7 +7,7 @@ const initializeCSV = AsyncWrapper(async (req, res) => {
   const json = require('../data/parsedJson.json')
   try {
     const x = await Bedca.insertMany(json)
-    console.log(x)
+    if (!x) throw new ErrorRequest('[ERROR] Saving bedca elements gave error', 400)
     return res.status(200).send({
       status: true,
       msg: 'all saved'

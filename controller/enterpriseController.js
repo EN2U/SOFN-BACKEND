@@ -5,7 +5,6 @@ const ErrorRequest = require('../errorHandling/requestError')
 
 const createEnterprise = AsyncWrapper(async (req, res) => {
   const newEnterprise = new Enterprise(req.body)
-  console.log(newEnterprise)
   try {
     await newEnterprise.save()
     res.status(201).send({
@@ -13,7 +12,6 @@ const createEnterprise = AsyncWrapper(async (req, res) => {
       msg: '[SUCCESS] Enterprise created!...'
     })
   } catch (error) {
-    console.log(error)
     return res.status(400).send({
       success: false,
       error: `${error}`
@@ -23,7 +21,6 @@ const createEnterprise = AsyncWrapper(async (req, res) => {
 
 const updateEnterpriseDetails = AsyncWrapper(async (req, res) => {
   try {
-    console.log(req.body)
     const enterprise = await Enterprise.findOneAndUpdate({ name: req.body.name, owner: req.body.owner }, req.body)
     if (!enterprise) throw new ErrorRequest('[ERROR] Enterprise not found...', 404)
     return res.status(200).send({
@@ -48,7 +45,6 @@ const updateEnterpriseDetails = AsyncWrapper(async (req, res) => {
 
 const updateLogo = AsyncWrapper(async (req, res) => {
   try {
-    console.log(req.body)
     const enterprise = await Enterprise.findOneAndUpdate({ name: req.body.name, owner: req.body.owner }, req.body)
     if (!enterprise) throw new ErrorRequest('[ERROR] Enterprise not found...', 404)
     return res.status(200).send({
@@ -73,7 +69,6 @@ const updateLogo = AsyncWrapper(async (req, res) => {
 
 const updateBanner = AsyncWrapper(async (req, res) => {
   try {
-    console.log(req.body)
     const enterprise = await Enterprise.findOneAndUpdate({ name: req.body.name, owner: req.body.owner }, req.body)
     if (!enterprise) throw new ErrorRequest('[ERROR] Enterprise not found...', 404)
     return res.status(200).send({
