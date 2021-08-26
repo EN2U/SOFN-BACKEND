@@ -8,10 +8,9 @@ const createEnterprise = AsyncWrapper(async (req, res) => {
   console.log(newEnterprise)
   try {
     await newEnterprise.save()
-    console.log(newEnterprise)
     res.status(201).send({
       success: true,
-      msg: 'Funciono xd'
+      msg: '[SUCCESS] Enterprise created!...'
     })
   } catch (error) {
     console.log(error)
@@ -30,7 +29,7 @@ const updateEnterpriseDetails = AsyncWrapper(async (req, res) => {
     return res.status(200).send({
       success: true,
       user: enterprise,
-      msg: '[SUCCESS] User updated successfully!...'
+      msg: '[SUCCESS] Enterprise details updated successfully!...'
     })
   } catch (error) {
     if (error.status !== undefined) {
@@ -55,7 +54,7 @@ const updateLogo = AsyncWrapper(async (req, res) => {
     return res.status(200).send({
       success: true,
       user: enterprise,
-      msg: '[SUCCESS] User updated successfully!...'
+      msg: '[SUCCESS] Logo updated successfully!...'
     })
   } catch (error) {
     if (error.status !== undefined) {
@@ -80,7 +79,7 @@ const updateBanner = AsyncWrapper(async (req, res) => {
     return res.status(200).send({
       success: true,
       user: enterprise,
-      msg: '[SUCCESS] User updated successfully!...'
+      msg: '[SUCCESS] Banner updated successfully!...'
     })
   } catch (error) {
     if (error.status !== undefined) {
@@ -104,7 +103,7 @@ const updateSocialMedia = AsyncWrapper(async (req, res) => {
     return res.status(200).send({
       success: true,
       user: enterprise,
-      msg: '[SUCCESS] User updated successfully!...'
+      msg: '[SUCCESS] Updated socialmedia successfully!...'
     })
   } catch (error) {
     if (error.status !== undefined) {
@@ -128,7 +127,7 @@ const updateEnterprise = AsyncWrapper(async (req, res) => {
     return res.status(200).send({
       success: true,
       enterprise: enterprise,
-      msg: '[SUCCESS] User updated successfully!...'
+      msg: '[SUCCESS] Update enterprise data successfully!...'
     })
   } catch (error) {
     if (error.status !== undefined) {
@@ -152,7 +151,7 @@ const getEnterpriseProfile = AsyncWrapper(async (req, res) => {
     return res.status(200).send({
       success: true,
       enterprise: enterprise,
-      msg: '[SUCCESS] User updated successfully!...'
+      msg: '[SUCCESS] Users enterprises retrieved successfully!...'
     })
   } catch (error) {
     if (error.status !== undefined) {
@@ -176,7 +175,7 @@ const getEnterpriseById = AsyncWrapper(async (req, res) => {
     return res.status(200).send({
       success: true,
       enterprise: enterprise,
-      msg: '[SUCCESS] New product added!!...'
+      msg: '[SUCCESS] Enterprise retrieved successfully!!...'
     })
   } catch (error) {
     if (error.status !== undefined) {
@@ -200,7 +199,31 @@ const updateProduct = AsyncWrapper(async (req, res) => {
     return res.status(200).send({
       success: true,
       enterprise: enterprise,
-      msg: '[SUCCESS] User updated successfully!...'
+      msg: '[SUCCESS] Product updated successfully!...'
+    })
+  } catch (error) {
+    if (error.status !== undefined) {
+      return res.status(error.status).send({
+        success: false,
+        error: `${error.message}`
+      })
+    } else {
+      return res.status(400).json({
+        success: false,
+        error: `${error}`
+      })
+    }
+  }
+})
+
+const getAllEnterprise = AsyncWrapper(async (req, res) => {
+  try {
+    const enterprises = await Enterprise.find()
+    if (!enterprises) throw new ErrorRequest('[ERROR] Enterprises not found...', 404)
+    return res.status(200).send({
+      success: true,
+      enterprises: enterprises,
+      msg: '[SUCCESS] All enterprises retrieved...'
     })
   } catch (error) {
     if (error.status !== undefined) {
@@ -226,5 +249,6 @@ module.exports = {
   getEnterpriseProfile,
   updateEnterprise,
   getEnterpriseById,
+  getAllEnterprise,
   updateProduct
 }

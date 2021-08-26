@@ -1,5 +1,6 @@
 const express = require('express')
 const openFoodFactsController = require('../controller/openFoodFactsController')
+const auth = require('../middleware/auth')
 
 const router = express.Router()
 
@@ -63,7 +64,7 @@ const router = express.Router()
  *       500:
  *         description: Comunication with the endpoint not working
  */
-router.post('/allElements', openFoodFactsController.openFoodFactsElements)
+router.post('/allElements', auth, openFoodFactsController.openFoodFactsElements)
 
 /**
  * @swagger
@@ -88,8 +89,8 @@ router.post('/allElements', openFoodFactsController.openFoodFactsElements)
  *         description: Comunication with the endpoint not working
  */
 
-router.post('/findByProduct', openFoodFactsController.openFoodFactsFindByProduct)
+router.post('/findByProduct', auth, openFoodFactsController.openFoodFactsFindByProduct)
 
-router.get('/categories', openFoodFactsController.getCategories)
+router.get('/categories', auth, openFoodFactsController.getCategories)
 
 module.exports = router

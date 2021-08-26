@@ -4,8 +4,8 @@ const auth = require('../middleware/auth')
 
 const router = express.Router()
 
-router.post('/', productCategoriesController.initializeCategories)
+router.post('/', auth, productCategoriesController.initializeCategories)
 
-router.get('/', productCategoriesController.getCategories)
+router.get('/', auth, productCategoriesController.getCategories)
 
 module.exports = router
