@@ -32,7 +32,18 @@ const openFoodFactsElements = AsyncWrapper(async (req, res) => {
       }
       const openFoodFactsProducts = await axios(config)
       const maxItems = openFoodFactsProducts.data.count
-      const formatedProducts = openFoodFactsUtils.parseOpenFoodFacts(openFoodFactsProducts.data.products.map(element => _.pick(element, ['_id', 'product_name', 'product_name_es', 'allergens', 'brands', 'stores', 'nutriments', 'image_url', 'nutrition_data_per'])))
+      const formatedProducts = openFoodFactsUtils.parseOpenFoodFacts(
+        openFoodFactsProducts.data.products.map(element => _.pick(element,
+          ['_id',
+            'product_name',
+            'product_name_es',
+            'allergens',
+            'brands',
+            'stores',
+            'nutriments',
+            'image_url',
+            'nutrition_data_per'])
+        ))
 
       if (formatedProducts.length !== 0) {
         return res.status(200).json({
